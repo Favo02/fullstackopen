@@ -20,6 +20,7 @@ const App = () => {
       <Visualizer text={"good"} score={good} />
       <Visualizer text={"neutral"} score={neutral} />
       <Visualizer text={"bad"} score={bad} />
+      <Stats scores={[good, neutral, bad]} />
     </>
   )
 }
@@ -27,5 +28,19 @@ const App = () => {
 const Button = ({ clickHandler, text }) => <button onClick={clickHandler}>{text}</button>
 
 const Visualizer = ({ text, score }) => <p>{text} {score}</p>
+
+const Stats = (props) => {
+  const [good, neutral, bad] = props.scores
+  const all = good + neutral + bad
+  const average = (good - bad) / all
+  const perc = (good / all) * 100
+  return (
+    <>
+      <Visualizer text={"all"} score={all} />
+      <Visualizer text={"average"} score={average} />
+      <p>positive {perc} %</p>
+    </>
+  )
+}
 
 export default App
