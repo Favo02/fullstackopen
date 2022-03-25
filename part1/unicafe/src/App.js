@@ -37,13 +37,27 @@ const Stats = (props) => {
   const average = (good - bad) / all
   const perc = (good / all) * 100
   return (
+    <table>
+      <tbody>
+        <TableRow text={"good"} score={good} />
+        <TableRow text={"neutral"} score={neutral} />
+        <TableRow text={"bad"} score={bad} />
+        <TableRow text={"all"} score={all} />
+        <TableRow text={"average"} score={average} />
+        <TableRow text={"positive"} score={perc + " %"} />
+      </tbody>
+    </table>
+  )
+}
+
+const TableRow = ({ text, score }) => {
+  return (
     <>
-      <Visualizer text={"good"} score={good} />
-      <Visualizer text={"neutral"} score={neutral} />
-      <Visualizer text={"bad"} score={bad} />
-      <Visualizer text={"all"} score={all} />
-      <Visualizer text={"average"} score={average} />
-      <Visualizer text={"positive"} score={perc + " %"} />
+      <tr>
+        <td>
+          <Visualizer text={text} score={score} />
+        </td>
+      </tr>
     </>
   )
 }
