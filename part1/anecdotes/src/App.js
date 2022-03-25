@@ -32,12 +32,26 @@ const App = () => {
     setVotes(copy)
   }
 
+  const mostVoted = () => {
+    let maxVotes = 0
+    let indexMaxVotes = 0
+    votes.forEach((vote, i) => {
+      if (vote > maxVotes) {
+        maxVotes = vote
+        indexMaxVotes = i
+      }
+    });
+    return indexMaxVotes
+  }
+
   return (
     <>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes</p>
-      <Button clickHandler={randomAnecdote} text={"randomize"}/>
+      <h1>Anecdote of the day</h1>
+      <Anecdote anecdote={anecdotes[selected]} vote={votes[selected]} />
       <Button clickHandler={voteAnecdote} text={"vote anecdote"}/>
+      <Button clickHandler={randomAnecdote} text={"next anecdote"}/>
+      <h1>Anecdote with most votes</h1>
+      <Anecdote anecdote={anecdotes[mostVoted()]} vote={votes[mostVoted()]} />
     </>
   )
 }
@@ -45,6 +59,15 @@ const App = () => {
 const Button = ({ clickHandler, text }) => {
   return (
     <button onClick={clickHandler}>{text}</button>
+  )
+}
+
+const Anecdote = ({ anecdote, vote }) => {
+  return (
+    <>
+      <p>{anecdote}</p>
+      <p>has {vote} votes</p>
+    </>
   )
 }
 
