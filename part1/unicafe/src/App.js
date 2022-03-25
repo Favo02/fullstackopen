@@ -17,9 +17,6 @@ const App = () => {
       <Button clickHandler={clickNeutral} text={"neutral"} />
       <Button clickHandler={clickBad} text={"bad"} />
       <h1>statistics</h1>
-      <Visualizer text={"good"} score={good} />
-      <Visualizer text={"neutral"} score={neutral} />
-      <Visualizer text={"bad"} score={bad} />
       <Stats scores={[good, neutral, bad]} />
     </>
   )
@@ -36,6 +33,9 @@ const Stats = (props) => {
   const perc = (good / all) * 100
   return (
     <>
+      <Visualizer text={"good"} score={good} />
+      <Visualizer text={"neutral"} score={neutral} />
+      <Visualizer text={"bad"} score={bad} />
       <Visualizer text={"all"} score={all} />
       <Visualizer text={"average"} score={average} />
       <p>positive {perc} %</p>
