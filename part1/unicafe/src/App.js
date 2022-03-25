@@ -29,6 +29,11 @@ const Visualizer = ({ text, score }) => <p>{text} {score}</p>
 const Stats = (props) => {
   const [good, neutral, bad] = props.scores
   const all = good + neutral + bad
+  if (all === 0) {
+    return (
+      <p>No feedback given</p>
+    )
+  }
   const average = (good - bad) / all
   const perc = (good / all) * 100
   return (
