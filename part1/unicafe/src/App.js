@@ -43,7 +43,7 @@ const Stats = (props) => {
       <Visualizer text={"bad"} score={bad} />
       <Visualizer text={"all"} score={all} />
       <Visualizer text={"average"} score={average} />
-      <p>positive {perc} %</p>
+      <Visualizer text={"positive"} score={perc + " %"} />
     </>
   )
 }
