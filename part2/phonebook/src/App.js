@@ -10,6 +10,12 @@ const App = () => {
     event.preventDefault()
     const newPerson = {}
     newPerson.name = newName
+
+    if (persons.filter( person => JSON.stringify(person) === JSON.stringify(newPerson)).length > 0) {
+      alert(`${newName} is already added to phonebook`)
+      return
+    }
+
     let copy = [...persons]
     copy = copy.concat(newPerson)
     setPersons(copy)
