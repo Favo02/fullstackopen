@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import Persons from "./components/Persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -16,6 +19,7 @@ const App = () => {
     const newPerson = {};
     newPerson.name = newName;
     newPerson.number = newNumber;
+    newPerson.id = persons.length + 1;
 
     if (persons.filter((person) => person.name === newPerson.name).length > 0) {
       alert(`${newName} is already added to phonebook`);
@@ -46,24 +50,25 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      Filter shown with <input onChange={editFilter} />
-      <h2>Add new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input onChange={editInputName} />
-          <br />
-          number: <input onChange={editInputNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {filtered.map((person) => (
-        <p key={person.name}>
-          {person.name} {person.number}
-        </p>
-      ))}
+
+      <Filter
+        editFilter={editFilter}
+      />
+
+      <h3>Add a new</h3>
+      
+      <PersonForm
+        addPerson={addPerson}
+        editInputName={editInputName}
+        editInputNumber={editInputNumber}
+      />
+
+      <h3>Numbers</h3>
+
+      <Persons
+        filtered={filtered}
+      />
+
     </div>
   );
 };
