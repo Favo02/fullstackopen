@@ -24,10 +24,14 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const showCountryButton = (event) => {
+    setFilter(event.target.getAttribute("country"))
+  }
+
   return (
     <>
-      <Form onChange={ editFilter }/>
-      <CountryData countries={countries} />
+      <Form filter={filter} onChange={ editFilter }/>
+      <CountryData countries={countries} showCountryButton={showCountryButton} />
     </>
   )
 }
