@@ -2,7 +2,7 @@ import React from "react";
 
 const Flag = ({ url }) => {
     return (
-        <img src={url} />
+        <img src={url} alt='country flag' />
     )
 }
 

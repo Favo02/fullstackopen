@@ -1,6 +1,7 @@
 import React from "react";
 import Flag from "./Flag";
 import RedirectButton from "./RedirectButton";
+import Weather from "./Weather";
 
 const CountryData = ({ showCountryButton, countries }) => {
     if (countries.length > 10) {
@@ -44,6 +45,8 @@ const CountryData = ({ showCountryButton, countries }) => {
                 </ul>
 
                 <Flag url={country.flags.png} />
+
+                <Weather city={country.capital} />
             </>
         )
     }
