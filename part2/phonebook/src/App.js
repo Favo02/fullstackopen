@@ -23,8 +23,25 @@ const App = () => {
     newPerson.number = newNumber;
     newPerson.id = persons.length + 1;
 
-    if (persons.filter((person) => person.name === newPerson.name).length > 0) {
-      alert(`${newName} is already added to phonebook`);
+    let updateId = -1
+    if (persons.filter((person) => { 
+      if (person.name === newPerson.name) {
+        updateId = person.id
+        return true
+      }
+      return false
+    }).length > 0) {
+      newPerson.id = updateId
+      personsService
+        .update(updateId, newPerson)
+        .then(updatedPerson => {
+          console.log("update persons");
+          setPersons( persons.map( person => person.id === updatedPerson.id ? updatedPerson : person) )
+        })
+        .catch(() => {
+          alert('Person not found')
+          setPersons(persons.filter( person => person.id !== updateId ))
+        })
       return;
     }
 
