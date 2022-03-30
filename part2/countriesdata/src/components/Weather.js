@@ -29,7 +29,7 @@ const Weather = ({ city }) => {
                 }
                 setCoords(newCoords)
             })
-    })
+    }, [])
 
     //retreive coords weather
     useEffect(() => {
@@ -46,7 +46,7 @@ const Weather = ({ city }) => {
                 }
                 setWeather(newWeather)
             })
-    })
+    }, [])
 
 
     return (
