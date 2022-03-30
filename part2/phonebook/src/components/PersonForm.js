@@ -1,12 +1,12 @@
 import React from "react";
 
-const PersonForm = ({ addPerson, editInputName, editInputNumber }) => {
+const PersonForm = ({ addPerson, editInputName, valueInputName, editInputNumber, valueInputNumber }) => {
     return (
         <form onSubmit={addPerson}>
         <div>
-          name: <input onChange={editInputName} />
+          name: <input onChange={editInputName} value={valueInputName} />
           <br />
-          number: <input onChange={editInputNumber} />
+          number: <input onChange={editInputNumber} value={valueInputNumber} />
         </div>
         <div>
           <button type="submit">add</button>
