@@ -53,6 +53,23 @@ const App = () => {
     person.name.toLowerCase().includes(filter)
   );
 
+  const deletePerson = (id, name) => {
+    const message = `Delete ${name}?`
+    if (!window.confirm(message)) {
+      return
+    }
+
+    personsService
+      .deletePerson(id)
+      .then(() => {
+        setPersons(persons.filter( person => person.id !== id ))
+      })
+      .catch(() => {
+        alert('Person already deleted')
+        setPersons(persons.filter( person => person.id !== id ))
+      })
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -75,6 +92,7 @@ const App = () => {
 
       <Persons
         filtered={filtered}
+        deletePerson={deletePerson}
       />
 
     </div>
