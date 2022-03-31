@@ -51,6 +51,36 @@ app.delete('/api/persons/:id', (request, response) => {
   }
 })
 
+app.use(express.json())
+const generateId = () => {
+  return Math.floor(Math.random() * 10000);
+}
+app.post('/api/persons', (request, response) => {
+  const person = request.body
+  console.log(person);
+
+  if (!person.name) {
+    return response.status(400).json({ 
+      error: 'name missing' 
+    })
+  }
+  if (!person.number) {
+    return response.status(400).json({ 
+      error: 'number missing' 
+    })
+  }
+
+  const newPerson = {
+    "id": generateId(),
+    "name": person.name, 
+    "number": person.number
+  }
+
+  persons = persons.concat(newPerson)
+
+  console.log(persons);
+})
+
 app.get('/info', (request, response) => {
   const phonebook_msg = `Phonebook has info for ${persons.length} people`
   const date_msg = new Date().toString()
