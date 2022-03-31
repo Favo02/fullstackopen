@@ -59,14 +59,22 @@ app.post('/api/persons', (request, response) => {
   const person = request.body
   console.log(person);
 
+  // name empty
   if (!person.name) {
     return response.status(400).json({ 
       error: 'name missing' 
     })
   }
+  // number empty
   if (!person.number) {
     return response.status(400).json({ 
       error: 'number missing' 
+    })
+  }
+  // name duplicated
+  if (persons.find( p => p.name === person.name )) {
+    return response.status(400).json({ 
+      error: 'name duplicated' 
     })
   }
 
@@ -78,7 +86,8 @@ app.post('/api/persons', (request, response) => {
 
   persons = persons.concat(newPerson)
 
-  console.log(persons);
+  response.status(200)
+  response.json(newPerson)
 })
 
 app.get('/info', (request, response) => {
