@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 
+app.use(express.static('build'))
+
 let persons = [
   { 
     "id": 1,
