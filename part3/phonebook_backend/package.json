@@ -11,6 +11,8 @@
   "author": "Luca Favini",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "heroku": "^7.60.1",
     "mongoose": "^6.2.9",
