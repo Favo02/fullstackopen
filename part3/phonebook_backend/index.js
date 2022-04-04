@@ -16,10 +16,12 @@ app.use(cors())
 
 app.use(express.static('build'))
 
-app.get('/api/persons', (request, response) => {
-  Person.find({}).then(persons => {
-    response.json(persons)
-  })
+app.get('/api/persons', (request, response, next) => {
+  Person.find({})
+    .then(persons => {
+      response.json(persons)
+    })
+    .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -34,13 +36,13 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
-  if (body.name === undefined) {
+  if (body.name === undefined || body.name === null || body.name === "") {
     return response.status(400).json({ error: 'name missing' })
   }
-  if (body.number === undefined) {
+  if (body.number === undefined || body.number === null || body.number === "") {
     return response.status(400).json({ error: 'number missing' })
   }
 
@@ -49,9 +51,32 @@ app.post('/api/persons', (request, response) => {
     number: body.number
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
+    .catch(error => next(error))
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+
+  const person = {
+    name: body.name,
+    number: body.number
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, {new: true})
+    .then(updatedPerson => {
+      if (updatedPerson) {
+        response.json(updatedPerson)
+      }
+      else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
+
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
@@ -65,12 +90,14 @@ app.delete('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.get('/info', (request, response) => {
-  Person.find({}).then(persons => {
-    const phonebook_msg = `Phonebook has info for ${persons.length} people`
-    const date_msg = new Date().toString()
-    response.send(`${phonebook_msg} <br> ${date_msg}`)
-  })
+app.get('/info', (request, response, next) => {
+  Person.find({})
+    .then(persons => {
+      const phonebook_msg = `Phonebook has info for ${persons.length} people`
+      const date_msg = new Date().toString()
+      response.send(`${phonebook_msg} <br> ${date_msg}`)
+    })
+    .catch(error => next(error))
 })
 
 const PORT = process.env.PORT || 3001
@@ -89,7 +116,7 @@ const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
-      return response.status(400).send({ error: 'malformatted id' })
+    return response.status(400).send({ error: 'malformatted id' })
   } 
 
   next(error)
