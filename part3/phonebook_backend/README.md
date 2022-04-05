@@ -1,3 +1,3 @@
 # Phoneboook
 
-Phonebook frontend + backend on Heraku: https://pumpkin-pudding-67037.herokuapp.com/
+Phonebook frontend + backend on Heroku: https://favo02-fullstackopen-phonebook.herokuapp.com/
