@@ -18,6 +18,14 @@ const App = () => {
     personsService
       .getAll()
       .then(newPerson => { setPersons(newPerson) })
+      .catch(error => {
+        console.log(error.response);
+        const newNotification = { type: 'error', message: `Error fetching the phonebook (error code: ${error.response.status})` }
+        setNotification(newNotification)
+          setTimeout(() => {
+            setNotification(notificationNull)
+          }, 5000)
+      })
   }, [])
 
   const addPerson = (event) => {
@@ -47,13 +55,19 @@ const App = () => {
             setNotification(notificationNull)
           }, 5000)
         })
-        .catch(() => {
-          const newNotification = { type: 'error', message: `${newPerson.name} has already been removed from the server` }
+        .catch(error => {
+          let newNotification = ""
+          if (error.response.status === 404) {
+            newNotification = { type: 'error', message: `${newPerson.name} not found on the server (error code: 404)` }
+            setPersons(persons.filter( person => person.id !== updateId ))
+          }
+          else if (error.response.status === 400) {
+            newNotification = { type: 'error', message: `${error.response.data.error} (error code: 400)` }
+          }
           setNotification(newNotification)
           setTimeout(() => {
             setNotification(notificationNull)
           }, 5000)
-          setPersons(persons.filter( person => person.id !== updateId ))
         })
       return;
     }
@@ -70,6 +84,14 @@ const App = () => {
           setNotification(notificationNull)
         }, 5000)
       })
+      .catch(error => {
+        console.log(error.response);
+        const newNotification = { type: 'error', message: `Error ${error.response.data.error} (error code: ${error.response.status})` }
+        setNotification(newNotification)
+          setTimeout(() => {
+            setNotification(notificationNull)
+          }, 5000)
+      })
   };
 
   const editInputName = (event) => {
@@ -84,9 +106,7 @@ const App = () => {
     setFilter(event.target.value);
   };
 
-  const filtered = persons.filter((person) =>
-    person.name.toLowerCase().includes(filter)
-  );
+  const filtered = persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()));
 
   const deletePerson = (id, name) => {
     const message = `Delete ${name}?`
