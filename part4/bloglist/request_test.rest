@@ -1,16 +1,16 @@
-# POST http://localhost:3003/api/blogs
-# Content-Type: application/json
-
-# {
-#     "title": "Smurfs",
-#     "author": "Papa smurf",
-#     "url": "https://smurfs.com",
-#     "linkes": 10000  
-# }
-
-GET http://localhost:3003/api/blogs
+POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    
+    "title": "Smurfs",
+    "author": "Papa smurf",
+    "url": "https://smurfs.com",
+    "linkes": 10000  
 }
+
+# GET http://localhost:3003/api/blogs
+# Content-Type: application/json
+
+# {
+    
+# }
