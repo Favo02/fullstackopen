@@ -119,6 +119,34 @@ test('delete a blog: status code 204', async () => {
     expect(contents).not.toContain(blogToDelete.title)
 })
 
+test('update a blog', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const newBlog = {
+        title: "The smurfs",
+        author: "Papa smurf",
+        url: "https://smurfs.com/",
+        likes: 25
+    }
+
+    await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(newBlog)
+        .expect(200)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+  
+    const updatedBlog = blogsAtEnd.find(blog => blog.id === blogToUpdate.id)
+
+    expect(updatedBlog.title).toBe(newBlog.title)
+    expect(updatedBlog.author).toBe(newBlog.author)
+    expect(updatedBlog.url).toBe(newBlog.url)
+    expect(updatedBlog.likes).toBe(newBlog.likes)
+
+})
+
 afterAll(() => {
     mongoose.connection.close()
 }) 
