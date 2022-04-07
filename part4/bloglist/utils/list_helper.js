@@ -8,8 +8,23 @@ const totalLikes = (blogs) => {
         0
     )
 }
-  
+
+const mostLikes = (blogs) => {
+    const likes = blogs.map(blog => blog.likes)
+    const max = Math.max(...likes)
+    const blog = blogs[likes.indexOf(max)]
+    return blog !== undefined 
+        ?
+            {
+                title: blog.title,
+                author: blog.author,
+                likes: blog.likes
+            }
+        : undefined
+}
+
 module.exports = {
     dummy,
-    totalLikes
+    totalLikes,
+    mostLikes
 }
