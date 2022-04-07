@@ -88,14 +88,14 @@ describe('total likes', () => {
     })
 })
 
-describe('most likes', () => {
+describe('favourite blog', () => {
     test('empty list', () => {
-        const result = listHelper.mostLikes([])
+        const result = listHelper.favoriteBlog([])
         expect(result).toEqual(undefined)
     })
 
     test('only one blog', () => {
-        const result = listHelper.mostLikes(listWithOneBlog)
+        const result = listHelper.favoriteBlog(listWithOneBlog)
         expect(result).toEqual(
             {
                 title: 'Go To Statement Considered Harmful',
@@ -106,7 +106,7 @@ describe('most likes', () => {
     })
 
     test('of a bigger list', () => {
-        const result = listHelper.mostLikes(blogs)
+        const result = listHelper.favoriteBlog(blogs)
         expect(result).toEqual(
             {
                 title: "TDD harms architecture",
@@ -139,6 +139,33 @@ describe('most blogs', () => {
             {
                 author: "Robert C. Martin",
                 blogs: 3,
+            }
+        )
+    })
+})
+
+describe('most likes', () => {
+    test('empty list', () => {
+        const result = listHelper.mostLikes([])
+        expect(result).toEqual(undefined)
+    })
+
+    test('only one blog', () => {
+        const result = listHelper.mostLikes(listWithOneBlog)
+        expect(result).toEqual(
+            {
+                author: 'Edsger W. Dijkstra',
+                likes: 5,
+            }
+        )
+    })
+
+    test('of a bigger list', () => {
+        const result = listHelper.mostLikes(blogs)
+        expect(result).toEqual(
+            {
+                author: "Robert C. Martin",
+                likes: 114,
             }
         )
     })
