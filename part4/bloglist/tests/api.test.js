@@ -54,6 +54,37 @@ test('a valid blog can be added ', async () => {
     )
 })
 
+test('missing likes = 0 likes', async () => {
+    const newBlog = {
+        title: "The smurfs",
+        author: "Papa smurf",
+        url: "https://smurfs.com/"
+    }
+  
+    const blogAdded = await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+  
+    expect(blogAdded.body.likes).toBe(0)
+})
+
+test('not missing likes = X likes', async () => {
+    const newBlog = {
+        title: "The smurfs",
+        author: "Papa smurf",
+        url: "https://smurfs.com/",
+        likes: 25
+    }
+  
+    const blogAdded = await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+  
+    expect(blogAdded.body.likes).toBe(25)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 }) 
