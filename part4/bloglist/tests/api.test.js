@@ -85,6 +85,21 @@ test('not missing likes = X likes', async () => {
     expect(blogAdded.body.likes).toBe(25)
 })
 
+test('blog without fields is not added', async () => {
+    const newBlog = {
+        author: "Smurf"
+    }
+  
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+  
+    const blogsAtEnd = await helper.blogsInDb()
+  
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 }) 
