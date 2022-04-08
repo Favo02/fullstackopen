@@ -1,15 +1,18 @@
-POST http://localhost:3003/api/users
-Content-Type: application/json
-
-{
-    "name": "test",
-    "username": "te",
-    "password": "test"
-}
-
-# GET http://localhost:3003/api/blogs
+# POST http://localhost:3003/api/users
 # Content-Type: application/json
 
 # {
-    
+#     "name": "test",
+#     "username": "test",
+#     "password": "test"
 # }
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "testtitle",
+    "author": "testauthor",
+    "url": "https://test.com",
+    "likes": 5
+}

@@ -7,7 +7,13 @@ const userSchema = new mongoose.Schema({
         minlength: [3, 'should be at least 3 characters long']
     },
     name: String,
-    passwordHash: String
+    passwordHash: String,
+    blogs: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Blog'
+        }
+    ],
 })
 
 userSchema.set('toJSON', {
