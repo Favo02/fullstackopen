@@ -26,6 +26,6 @@
 #     "likes": 5
 # }
 
-DELETE http://localhost:3003/api/blogs/625067a5d53b7640d437e1da
+DELETE http://localhost:3003/api/blogs/625067a5d53b7640d437e1d6
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjYyNTA2NzkyZDUzYjc2NDBkNDM3ZTFjZSIsImlhdCI6MTY0OTQzNjU2OCwiZXhwIjoxNjQ5NDQwMTY4fQ.gneqvATdg2FYDIWgw4bnAgz9KuRi6OY8fz4G5Aghq_8
