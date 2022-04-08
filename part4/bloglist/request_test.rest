@@ -9,6 +9,7 @@
 
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjYyNTA1M2IxMjk3MDlhNWVhY2E2OWU5MyIsImlhdCI6MTY0OTQzMzY0NywiZXhwIjoxNjQ5NDM3MjQ3fQ.wlFRR4C45KHrUc0j7GtUCvgDYcdxjHVc_Nmf0yiLukE
 
 {
     "title": "testtitle",
@@ -16,3 +17,11 @@ Content-Type: application/json
     "url": "https://test.com",
     "likes": 5
 }
+
+# POST http://localhost:3003/api/login
+# Content-Type: application/json
+
+# {
+#     "username": "test",
+#     "password": "test"
+# }
