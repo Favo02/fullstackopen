@@ -1,11 +1,10 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-    "title": "Smurfs",
-    "author": "Papa smurf",
-    "url": "https://smurfs.com",
-    "linkes": 10000  
+    "name": "Luca",
+    "username": "impru",
+    "password": "Puffo"
 }
 
 # GET http://localhost:3003/api/blogs
