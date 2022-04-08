@@ -2,9 +2,9 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-    "name": "Luca",
-    "username": "impru",
-    "password": "Puffo"
+    "name": "test",
+    "username": "te",
+    "password": "test"
 }
 
 # GET http://localhost:3003/api/blogs
