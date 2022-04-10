@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Notification from './components/Notification'
 import Login from './components/Login'
 import Blogs from './components/Blogs'
 import NewBlog from './components/NewBlog'
@@ -6,6 +7,8 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
+  const [notificationMessage, setNotificationMessage] = useState(null)
+  const [notificationIsError, setNotificationIsError] = useState(false)
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
@@ -36,6 +39,12 @@ const App = () => {
         username, password,
       })
 
+      setNotificationMessage(`${user.username} logged in successfully`)
+      setNotificationIsError(false)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
       )
@@ -46,10 +55,22 @@ const App = () => {
     }
     catch (exception) {
       console.log('wrong credentials')
+
+      setNotificationMessage(`error: wrong credentials`)
+      setNotificationIsError(true)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
     }
   }
 
   const logout = () => {
+    setNotificationMessage(`logged out`)
+    setNotificationIsError(false)
+    setTimeout(() => {
+      setNotificationMessage(null)
+    }, 5000)
+
     window.localStorage.removeItem('loggedNoteappUser')
     setUser(null)
   }
@@ -65,6 +86,12 @@ const App = () => {
 
       const addedBlog = await blogService.create(newBlog)
 
+      setNotificationMessage(`${addedBlog.title} by ${addedBlog.author} created successfully`)
+      setNotificationIsError(false)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+
       const updatedBlogs = blogs.concat(addedBlog)
       setBlogs(updatedBlogs)
 
@@ -74,12 +101,19 @@ const App = () => {
     }
     catch (exception) {
       console.log(exception)
+
+      setNotificationMessage(`error: ${exception}`)
+      setNotificationIsError(true)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
     }
   }
 
   if (user === null) {
     return (
       <div>
+        <Notification message={notificationMessage} isError={notificationIsError} />
         <h2>Log in to application</h2>
         <Login
           handleLogin={handleLogin}
@@ -94,6 +128,8 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notificationMessage} isError={notificationIsError} />
+
       <p>{user.username} logged in<button onClick={logout}>logout</button></p>
 
       <Blogs blogs={blogs} />
