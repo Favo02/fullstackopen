@@ -77,8 +77,13 @@ const App = () => {
   const newBlog = async (newBlogObject) => {
     
     try {
-      const addedBlog = await blogService.create(newBlogObject)
+      let addedBlog = await blogService.create(newBlogObject)
       newBlogFormRef.current.toggleVisibility()
+
+      // the delete button needs to know the username of the user who added the blog to show or not show the delete button,
+      // the returned addedBlog includes only the id of the user (than cannot be compared because the user state variable)
+      // includes only username and token, not he id of the current user
+      addedBlog.user = { username: user.username } 
 
       setNotificationMessage(`${addedBlog.title} by ${addedBlog.author} created successfully`)
       setNotificationIsError(false)
@@ -127,6 +132,23 @@ const App = () => {
     }
   }
 
+  const deleteBlog = async (id) => {
+    try {
+      const deletedBlog = await blogService.remove(id)
+      console.log(deletedBlog);
+      setBlogs(blogs.filter(blog => blog.id !== id))
+    }
+    catch (exception) {
+      console.log(exception)
+
+      setNotificationMessage(`error: ${exception}`)
+      setNotificationIsError(true)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -147,7 +169,12 @@ const App = () => {
         <NewBlog newBlog={newBlog} />
       </Togglable>
 
-      <Blogs blogs={blogs} likeBlog={likeBlog} />
+      <Blogs
+        blogs={blogs}
+        likeBlog={likeBlog}
+        deleteBlog={deleteBlog}
+        username={user.username}
+      />
 
     </div>
   )

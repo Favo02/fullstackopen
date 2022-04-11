@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, likeBlog }) => {
+const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
     const [viewDetails, setViewDetails] = useState(false)
 
     const blogStyle = {
@@ -11,13 +11,21 @@ const Blog = ({ blog, likeBlog }) => {
         'maxWidth': '400px'
     }
 
+    const handleDelete = (blog) => {
+        if (window.confirm(`Are you sure to delete ${blog.title}?`)) {
+            deleteBlog(blog.id)
+        }
+    }
+
     if (viewDetails) {
+        console.log('Blog.js - ', blog);
         return (
             <div style={blogStyle}>
                 {blog.title} <button onClick={() => setViewDetails(false) }>hide</button><br />
                 {blog.url}<br />
                 {blog.likes} <button onClick={() => likeBlog(blog) }>like</button><br />
                 {blog.url}<br />
+                {username === blog.user.username ? <button onClick={() => handleDelete(blog) }>delete</button> : <></>}
             </div>
         )
     }
