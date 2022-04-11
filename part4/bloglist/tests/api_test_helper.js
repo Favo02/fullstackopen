@@ -1,5 +1,5 @@
-const Blog = require('../models/blog')
-const User = require('../models/user')
+const Blog = require("../models/blog")
+const User = require("../models/user")
 
 const initialBlogs = [
     {
@@ -41,7 +41,7 @@ const initialBlogs = [
 ]
 
 const nonExistingId = async () => {
-    const blog = new Blog({ title: 'willremovethissoon', author: 'a', url: 'b', likes: 0 })
+    const blog = new Blog({ title: "willremovethissoon", author: "a", url: "b", likes: 0 })
     await blog.save()
     await blog.remove()
 

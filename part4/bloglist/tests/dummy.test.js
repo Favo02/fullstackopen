@@ -1,7 +1,7 @@
-const listHelper = require('../utils/list_helper')
+const listHelper = require("../utils/list_helper")
 
-describe('dummy', () => {
-    test('dummy returns one', () => {
+describe("dummy", () => {
+    test("dummy returns one", () => {
         const blogs = []
 
         const result = listHelper.dummy(blogs)
@@ -11,10 +11,10 @@ describe('dummy', () => {
 
 const listWithOneBlog = [
     {
-        _id: '5a422aa71b54a676234d17f8',
-        title: 'Go To Statement Considered Harmful',
-        author: 'Edsger W. Dijkstra',
-        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+        _id: "5a422aa71b54a676234d17f8",
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+        url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
         likes: 5,
         __v: 0
     }
@@ -68,44 +68,44 @@ const blogs = [
         url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
         likes: 4,
         __v: 0
-    } 
+    }
 ]
 
-describe('total likes', () => {  
-    test('of empty list is zero', () => {
+describe("total likes", () => {
+    test("of empty list is zero", () => {
         const result = listHelper.totalLikes([])
         expect(result).toBe(0)
     })
 
-    test('when list has only one blog, equals the likes of that', () => {
+    test("when list has only one blog, equals the likes of that", () => {
         const result = listHelper.totalLikes(listWithOneBlog)
         expect(result).toBe(5)
     })
 
-    test('of a bigger list is right', () => {
+    test("of a bigger list is right", () => {
         const result = listHelper.totalLikes(blogs)
         expect(result).toBe(138)
     })
 })
 
-describe('favourite blog', () => {
-    test('empty list', () => {
+describe("favourite blog", () => {
+    test("empty list", () => {
         const result = listHelper.favoriteBlog([])
         expect(result).toEqual(undefined)
     })
 
-    test('only one blog', () => {
+    test("only one blog", () => {
         const result = listHelper.favoriteBlog(listWithOneBlog)
         expect(result).toEqual(
             {
-                title: 'Go To Statement Considered Harmful',
-                author: 'Edsger W. Dijkstra',
+                title: "Go To Statement Considered Harmful",
+                author: "Edsger W. Dijkstra",
                 likes: 5,
             }
         )
     })
 
-    test('of a bigger list', () => {
+    test("of a bigger list", () => {
         const result = listHelper.favoriteBlog(blogs)
         expect(result).toEqual(
             {
@@ -117,23 +117,23 @@ describe('favourite blog', () => {
     })
 })
 
-describe('most blogs', () => {
-    test('empty list', () => {
+describe("most blogs", () => {
+    test("empty list", () => {
         const result = listHelper.mostBlogs([])
         expect(result).toEqual(undefined)
     })
 
-    test('only one blog', () => {
+    test("only one blog", () => {
         const result = listHelper.mostBlogs(listWithOneBlog)
         expect(result).toEqual(
             {
-                author: 'Edsger W. Dijkstra',
+                author: "Edsger W. Dijkstra",
                 blogs: 1,
             }
         )
     })
 
-    test('of a bigger list', () => {
+    test("of a bigger list", () => {
         const result = listHelper.mostBlogs(blogs)
         expect(result).toEqual(
             {
@@ -144,23 +144,23 @@ describe('most blogs', () => {
     })
 })
 
-describe('most likes', () => {
-    test('empty list', () => {
+describe("most likes", () => {
+    test("empty list", () => {
         const result = listHelper.mostLikes([])
         expect(result).toEqual(undefined)
     })
 
-    test('only one blog', () => {
+    test("only one blog", () => {
         const result = listHelper.mostLikes(listWithOneBlog)
         expect(result).toEqual(
             {
-                author: 'Edsger W. Dijkstra',
+                author: "Edsger W. Dijkstra",
                 likes: 5,
             }
         )
     })
 
-    test('of a bigger list', () => {
+    test("of a bigger list", () => {
         const result = listHelper.mostLikes(blogs)
         expect(result).toEqual(
             {
