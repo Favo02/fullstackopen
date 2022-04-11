@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
     const [viewDetails, setViewDetails] = useState(false)
@@ -18,7 +19,6 @@ const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
     }
 
     if (viewDetails) {
-        console.log('Blog.js - ', blog);
         return (
             <div style={blogStyle}>
                 {blog.title} <button onClick={() => setViewDetails(false) }>hide</button><br />
@@ -35,6 +35,13 @@ const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
             {blog.title} {blog.author} <button onClick={() => setViewDetails(true) }>view</button>
         </div>
     )
+}
+
+Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    likeBlog: PropTypes.func.isRequired,
+    deleteBlog: PropTypes.func.isRequired,
+    username: PropTypes.string.isRequired,
 }
 
 export default Blog
