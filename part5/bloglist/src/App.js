@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs(blogs.sort((a, b) => a.likes > b.likes ? -1 : 1))
     )  
   }, [])
 
@@ -87,7 +87,7 @@ const App = () => {
       }, 5000)
 
       const updatedBlogs = blogs.concat(addedBlog)
-      setBlogs(updatedBlogs)
+      setBlogs(updatedBlogs.sort((a, b) => a.likes > b.likes ? -1 : 1))
     }
     catch (exception) {
       console.log(exception)
@@ -113,7 +113,8 @@ const App = () => {
 
     try {
       const updatedBlog = await blogService.update(blogToUpdate, blog.id)
-      setBlogs(blogs.map(b => b.id !== blog.id ? b : updatedBlog))
+      let sortedBlogs = blogs.map(b => b.id !== blog.id ? b : updatedBlog)
+      setBlogs(sortedBlogs.sort((a, b) => a.likes > b.likes ? -1 : 1))
     }
     catch (exception) {
       console.log(exception)
