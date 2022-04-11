@@ -1,8 +1,13 @@
-import { useState, useEffect } from 'react'
-import Notification from './components/Notification'
+import { useState, useEffect, useRef } from 'react'
+
 import Login from './components/Login'
+
+import Notification from './components/Notification'
+import Togglable from './components/Togglable'
+
 import Blogs from './components/Blogs'
 import NewBlog from './components/NewBlog'
+
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -85,6 +90,7 @@ const App = () => {
       }
 
       const addedBlog = await blogService.create(newBlog)
+      newBlogFormRef.current.toggleVisibility()
 
       setNotificationMessage(`${addedBlog.title} by ${addedBlog.author} created successfully`)
       setNotificationIsError(false)
@@ -110,6 +116,8 @@ const App = () => {
     }
   }
 
+  const newBlogFormRef = useRef()
+
   if (user === null) {
     return (
       <div>
@@ -132,17 +140,19 @@ const App = () => {
 
       <p>{user.username} logged in<button onClick={logout}>logout</button></p>
 
-      <Blogs blogs={blogs} />
+      <Togglable buttonLabel={'add new blog'} ref={newBlogFormRef}>
+        <NewBlog
+          handleNewBlog={handleNewBlog}
+          newBlogTitle={newBlogTitle}
+          setNewBlogTitle={setNewBlogTitle}
+          newBlogAuthor={newBlogAuthor}
+          setNewBlogAuthor={setNewBlogAuthor}
+          newBlogUrl={newBlogUrl}
+          setNewBlogUrl={setNewBlogUrl}
+        />
+      </Togglable>
 
-      <NewBlog
-        handleNewBlog={handleNewBlog}
-        newBlogTitle={newBlogTitle}
-        setNewBlogTitle={setNewBlogTitle}
-        newBlogAuthor={newBlogAuthor}
-        setNewBlogAuthor={setNewBlogAuthor}
-        newBlogUrl={newBlogUrl}
-        setNewBlogUrl={setNewBlogUrl}
-      />
+      <Blogs blogs={blogs} />
 
     </div>
   )
