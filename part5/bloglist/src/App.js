@@ -14,13 +14,10 @@ import loginService from './services/login'
 const App = () => {
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [notificationIsError, setNotificationIsError] = useState(false)
-  const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('')
+  
   const [user, setUser] = useState(null)
-  const [newBlogTitle, setNewBlogTitle] = useState('')
-  const [newBlogAuthor, setNewBlogAuthor] = useState('')
-  const [newBlogUrl, setNewBlogUrl] = useState('')
+
+  const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -37,8 +34,7 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const login = async (username, password) => {
     try {
       const user = await loginService.login({
         username, password,
@@ -55,8 +51,6 @@ const App = () => {
       )
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     }
     catch (exception) {
       console.log('wrong credentials')
@@ -80,16 +74,11 @@ const App = () => {
     setUser(null)
   }
 
-  const handleNewBlog = async (event) => {
-    event.preventDefault()
+  const newBlog = async (newBlogObject) => {
+    
     try {
-      const newBlog = {
-        title: newBlogTitle,
-        author: newBlogAuthor,
-        url: newBlogUrl
-      }
-
-      const addedBlog = await blogService.create(newBlog)
+      console.log(newBlogObject);
+      const addedBlog = await blogService.create(newBlogObject)
       newBlogFormRef.current.toggleVisibility()
 
       setNotificationMessage(`${addedBlog.title} by ${addedBlog.author} created successfully`)
@@ -100,10 +89,6 @@ const App = () => {
 
       const updatedBlogs = blogs.concat(addedBlog)
       setBlogs(updatedBlogs)
-
-      setNewBlogTitle('')
-      setNewBlogAuthor('')
-      setNewBlogUrl('')
     }
     catch (exception) {
       console.log(exception)
@@ -123,13 +108,7 @@ const App = () => {
       <div>
         <Notification message={notificationMessage} isError={notificationIsError} />
         <h2>Log in to application</h2>
-        <Login
-          handleLogin={handleLogin}
-          username={username}
-          setUsername={setUsername}
-          password={password}
-          setPassword={setPassword}
-        />
+        <Login login={login} />
       </div>
     )
   }
@@ -141,15 +120,7 @@ const App = () => {
       <p>{user.username} logged in<button onClick={logout}>logout</button></p>
 
       <Togglable buttonLabel={'add new blog'} ref={newBlogFormRef}>
-        <NewBlog
-          handleNewBlog={handleNewBlog}
-          newBlogTitle={newBlogTitle}
-          setNewBlogTitle={setNewBlogTitle}
-          newBlogAuthor={newBlogAuthor}
-          setNewBlogAuthor={setNewBlogAuthor}
-          newBlogUrl={newBlogUrl}
-          setNewBlogUrl={setNewBlogUrl}
-        />
+        <NewBlog newBlog={newBlog} />
       </Togglable>
 
       <Blogs blogs={blogs} />
