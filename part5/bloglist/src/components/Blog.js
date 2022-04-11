@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import PropTypes from 'prop-types'
+import { useState } from "react"
+import PropTypes from "prop-types"
 
 const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
     const [viewDetails, setViewDetails] = useState(false)
 
     const blogStyle = {
-        'border': '1px solid black',
-        'borderRadius': '5px',
-        'marginBottom': '5px',
-        'padding': '5px 10px',
-        'maxWidth': '400px'
+        "border": "1px solid black",
+        "borderRadius": "5px",
+        "marginBottom": "5px",
+        "padding": "5px 10px",
+        "maxWidth": "400px"
     }
 
     const handleDelete = (blog) => {

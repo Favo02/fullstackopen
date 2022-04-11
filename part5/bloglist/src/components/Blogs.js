@@ -1,5 +1,5 @@
 import Blog from "./Blog"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
 const Blogs = ({ blogs, likeBlog, deleteBlog, username }) => (
     <div>
@@ -12,9 +12,8 @@ const Blogs = ({ blogs, likeBlog, deleteBlog, username }) => (
                 deleteBlog={deleteBlog}
                 username={username}
             />
-        )}  
+        )}
     </div>
-                  
 )
 
 Blogs.propTypes = {
