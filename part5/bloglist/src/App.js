@@ -77,7 +77,6 @@ const App = () => {
   const newBlog = async (newBlogObject) => {
     
     try {
-      console.log(newBlogObject);
       const addedBlog = await blogService.create(newBlogObject)
       newBlogFormRef.current.toggleVisibility()
 
@@ -103,6 +102,30 @@ const App = () => {
 
   const newBlogFormRef = useRef()
 
+  const likeBlog = async (blog) => {
+    const blogToUpdate = {
+      user: blog.user.id,
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url
+    }
+
+    try {
+      const updatedBlog = await blogService.update(blogToUpdate, blog.id)
+      setBlogs(blogs.map(b => b.id !== blog.id ? b : updatedBlog))
+    }
+    catch (exception) {
+      console.log(exception)
+
+      setNotificationMessage(`error: ${exception}`)
+      setNotificationIsError(true)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -123,7 +146,7 @@ const App = () => {
         <NewBlog newBlog={newBlog} />
       </Togglable>
 
-      <Blogs blogs={blogs} />
+      <Blogs blogs={blogs} likeBlog={likeBlog} />
 
     </div>
   )
