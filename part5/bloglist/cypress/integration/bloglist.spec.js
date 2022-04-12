@@ -7,6 +7,12 @@ describe("Blog app", function() {
             password: "test"
         }
         cy.request("POST", "http://localhost:3003/api/users/", user)
+        const user2 = {
+            name: "test2",
+            username: "test2",
+            password: "test2"
+        }
+        cy.request("POST", "http://localhost:3003/api/users/", user2)
         cy.visit("http://localhost:3000")
     })
 
@@ -76,4 +82,22 @@ describe("Blog app", function() {
 
         })
     })
+
+    describe("Another user app", function() {
+
+        it("Another user blog can't be deleted", function() {
+            cy.login({ username: "test", password: "test" })
+            cy.createBlog({ title: "second blog", author: "second author", url: "https://secondo.com" })
+            cy.get("#logout-button").click()
+
+            cy.login({ username: "test2", password: "test2" })
+            cy.createBlog({ title: "third blog", author: "third author", url: "https://terzo.com" })
+            cy.contains("second blog").parent().as("secondBlog").parent()
+
+            cy.get("@secondBlog").should("not.contain", "#viewBlog-button")
+            cy.get("html").should("contain", "second blog")
+        })
+
+    })
+
 })
