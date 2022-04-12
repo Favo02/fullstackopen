@@ -1,4 +1,4 @@
-describe("login checks", function() {
+describe("Blog app", function() {
     beforeEach(function() {
         cy.request("POST", "http://localhost:3003/api/testing/reset")
         const user = {
@@ -32,6 +32,23 @@ describe("login checks", function() {
                 .should("have.css", "color", "rgb(255, 0, 0)")
 
             cy.get("html").should("not.contain", "test logged in")
+        })
+    })
+
+    describe("When logged in", function() {
+        beforeEach(function() {
+            cy.login({ username: "test", password: "test" })
+        })
+
+        it("A blog can be created", function() {
+            cy.contains("new blog").click()
+            cy.get("#title-input").type("a blog created by cypress")
+            cy.get("#author-input").type("aucypress")
+            cy.get("#url-input").type("https://cypress.com")
+            cy.get("#addBlog-button").click()
+
+            cy.contains("a blog created by cypress")
+            cy.contains("aucypress")
         })
     })
 })
