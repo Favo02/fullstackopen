@@ -50,5 +50,30 @@ describe("Blog app", function() {
             cy.contains("a blog created by cypress")
             cy.contains("aucypress")
         })
+
+        describe("A blog already exists", function() {
+
+            beforeEach(function () {
+                cy.createBlog({ title: "first blog", author: "first author", url: "https://primo.com" })
+                cy.createBlog({ title: "second blog", author: "second author", url: "https://secondo.com" })
+            })
+
+            it("A blog can be liked", function() {
+                cy.contains("first blog").parent().as("firstBlog").parent()
+                cy.get("@firstBlog").find("#viewBlog-button").click()
+                cy.get("@firstBlog").find("#likeBlog-button").click()
+
+                cy.get("@firstBlog").find("#likes").contains("1")
+            })
+
+            it("A blog can be deleted", function() {
+                cy.contains("first blog").parent().as("firstBlog").parent()
+                cy.get("@firstBlog").find("#viewBlog-button").click()
+                cy.get("@firstBlog").find("#deleteBlog-button").click()
+
+                cy.get("html").should("not.contain", "first blog")
+            })
+
+        })
     })
 })
