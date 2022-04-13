@@ -81,6 +81,54 @@ describe("Blog app", function() {
             })
 
         })
+
+        describe("Blog are like ordered", function() {
+            beforeEach(function () {
+                cy.createBlog({ title: "first blog", author: "first author", url: "https://primo.com" })
+                cy.createBlog({ title: "second blog", author: "second author", url: "https://secondo.com" })
+                cy.contains("first").find("#viewBlog-button").click()
+                cy.contains("second").find("#viewBlog-button").click()
+            })
+
+            it.only("first more likes than second", function() {
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+
+                cy.get("span#likes").then( likes => {
+                    const likesNumber = likes.toArray().map(el => el.innerText)
+                    expect(likesNumber).to.deep.equal([...likesNumber].sort().reverse())
+                })
+            })
+
+            it.only("second more likes than first", function() {
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+                cy.contains("first").find("#likeBlog-button").click()
+
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+                cy.contains("second").find("#likeBlog-button").click()
+
+                cy.get("span#likes").then( likes => {
+                    const likesNumber = likes.toArray().map(el => el.innerText)
+                    expect(likesNumber).to.deep.equal([...likesNumber].sort().reverse())
+                })
+            })
+        })
+
     })
 
     describe("Another user app", function() {

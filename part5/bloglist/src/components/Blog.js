@@ -20,9 +20,9 @@ const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
 
     if (viewDetails) {
         return (
-            <div style={blogStyle}>
+            <div className="blog-div" style={blogStyle}>
                 {blog.title} <button id="hideBlog-button" onClick={() => setViewDetails(false) }>hide</button><br />
-                {blog.url}<br />
+                {blog.author}<br />
                 <span id="likes">{blog.likes}</span>
                 <button id="likeBlog-button" onClick={() => likeBlog(blog) }>like</button><br />
                 {blog.url}<br />
